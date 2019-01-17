@@ -1,0 +1,7 @@
+---
+message: 'Default Message'
+
+cookboook::example::publisher: 'PacktPub'
+
+#for module check
+puppet_is_enabled: true

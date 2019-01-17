@@ -1,0 +1,13 @@
+---
+:backends:
+  - yaml
+
+:hierarchy:
+  - "%{env}/%{location}/%{calling_module}"
+  - "%{env}/%{calling_module}"
+  - "%{env}"
+  - "nodes/%{::hostname}"
+  - common
+
+:yaml:
+  :datadir: '/etc/puppetlabs/puppet/hieradata'

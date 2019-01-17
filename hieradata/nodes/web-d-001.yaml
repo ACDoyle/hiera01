@@ -1,0 +1,7 @@
+---
+message:
+  - 'message1'
+  - 'message2'
+eventmachine::version_gem: '1.2.6'
+#profile::apache::domain_ssl: 'secure-ssl.example.com'
+domain_ssl: 'secure-ssl.example.com'

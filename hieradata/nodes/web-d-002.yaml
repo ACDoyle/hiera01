@@ -1,0 +1,29 @@
+---
+# string
+message: 'Message for web-d-002!'
+domain_ssl: 'aws-secure-ssl.example.com'
+
+# boolean
+agent_atboot: true
+
+# array
+puppet_components:
+  - facter
+  - puppet
+
+# a hash of values
+application:
+  ensure: 'present'
+  version: '4.10.10'
+
+# A variable lookup
+#hostname: %{facts.hostname}
+
+puppet::is_enabled: false
+puppet_is_enabled: false
+
+ansible_rsa_priv_key: |
+  ---XXX---
+  qwe123456
+  --END---
+

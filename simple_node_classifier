@@ -1,0 +1,71 @@
+#!/usr/bin/env python
+# PYTHON ENC
+# receives fqdn as argument
+
+import yaml
+import sys
+"""output_yaml renders the has as yaml and exits cleanly"""
+def output_yaml(enc):
+  # output the ENC as yaml
+  print "---"
+  print yaml.dump(enc)
+  quit()
+
+# create an empy hash
+enc = {}
+enc["classes"] = {}
+enc["parameters"] = {}
+
+try:
+  hostname = sys.argv[1]
+except:
+  # need a hostname
+  sys.exit(10)
+
+# split hostname on _
+try:
+  parts = hostname.split('-')
+  role = parts[0]
+  environment = parts[1]
+  instance = parts[2][2:]
+
+except:
+  # hostname didn't conform to our standard
+  # include a class which notifies us of the problem
+  enc["classes"]["hostname_problem"] = {'enc_hostname': hostname}
+  output_yaml(enc)
+  raise SystemExit
+
+########################
+########################
+### LOGIC internal   ###
+########################
+########################
+
+if role == 'web' and environment =='d':
+  role = 'role::webserver_dev'
+elif role == 'web' and environment == 'p':
+  role = 'role::webserver_prod'
+
+
+########################
+########################
+########################
+# map environment from hostname into environment
+environments = {}
+environments['p'] = 'production'
+environments['d'] = 'development'
+try:
+  enc["environment"] = environments[environment]
+except:
+  enc["environment"] = 'undef'
+
+# map role from hostname into role
+enc["classes"][role] = {}
+
+# set top scope variables
+enc["parameters"]["enc_hostname"] = hostname
+enc["parameters"]["role"] = role
+enc["parameters"]["instance"] = instance
+
+output_yaml(enc)
